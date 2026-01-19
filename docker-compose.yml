@@ -33,6 +33,45 @@ services:
       timeout: 5s
       retries: 12
 
+  api:
+    build:
+      context: .
+      dockerfile: src/Host.Api/Dockerfile
+    container_name: fintechlite-api
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__Default: Host=postgres;Port=5432;Database=fintechlite;Username=postgres;Password=postgres
+    ports:
+      - "5080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+
+  worker:
+    build:
+      context: .
+      dockerfile: src/Host.Worker/Dockerfile
+    container_name: fintechlite-worker
+    environment:
+      DOTNET_ENVIRONMENT: Development
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+    container_name: fintechlite-web
+    ports:
+      - "5173:80"
+    depends_on:
+      - api
+
 volumes:
   pgdata:
   rabbitdata:
