@@ -42,3 +42,19 @@ export async function getJson<T>(path: string): Promise<T> {
     if (!res.ok) throw new HttpError(`GET ${path} failed`, res.status, text);
     return JSON.parse(text) as T;
 }
+
+export async function postJson<TResponse, TBody>(
+  path: string,
+  body: TBody
+): Promise<TResponse> {
+  const res = await fetch(path, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+
+  const text = await res.text();
+  if (!res.ok) throw new HttpError(`POST ${path} failed`, res.status, text);
+
+  return text ? (JSON.parse(text) as TResponse) : (undefined as TResponse);
+}
