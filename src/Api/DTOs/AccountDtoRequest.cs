@@ -2,6 +2,6 @@
 {
     public class AccountDtoRequest
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = default!;
     }
 }
