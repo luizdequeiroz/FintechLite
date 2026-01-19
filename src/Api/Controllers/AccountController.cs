@@ -1,5 +1,4 @@
 ﻿using Api.DTOs.Account;
-using Domain;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 
