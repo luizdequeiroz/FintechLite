@@ -13,25 +13,25 @@ namespace Infrastructure.Services
             this.accountRepository = accountRepository;
         }
 
-        public async Task<IList<Account>> GetAllAccountsAsync()
+        public async Task<IList<Account>> GetAllAccountsAsync(CancellationToken cancellationToken = default)
         {
-            return await accountRepository.SelectAllAccountsAsync();
+            return await accountRepository.SelectAllAccountsAsync(cancellationToken);
         }
 
-        public async Task<Account?> GetByIdAsync(Guid id)
+        public async Task<Account?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            return await accountRepository.SelectAccountByIdAsync(id);
+            return await accountRepository.SelectAccountByIdAsync(id, cancellationToken);
         }
 
-        public async Task<Account> CreateAsync(string name)
+        public async Task<Account> CreateAsync(string name, CancellationToken cancellationToken = default)
         {
             var account = new Account
             {
                 Name = name,
                 BalanceCents = 0
             };
-            await accountRepository.AddAsync(account);
-            await accountRepository.SaveChangesAsync();
+            await accountRepository.AddAsync(account, cancellationToken);
+            await accountRepository.SaveChangesAsync(cancellationToken);
             return account;
         }
     }

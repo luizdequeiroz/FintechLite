@@ -13,25 +13,25 @@ namespace Infrastructure.Repositories
             this.fintechLiteDbContext = fintechLiteDbContext;
         }
 
-        public async Task AddAsync(Account account)
+        public async Task AddAsync(Account account, CancellationToken cancellationToken = default)
         {
-            await fintechLiteDbContext.Accounts.AddAsync(account);
+            await fintechLiteDbContext.Accounts.AddAsync(account, cancellationToken);
         }
 
-        public Task<int> SaveChangesAsync()
+        public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            return fintechLiteDbContext.SaveChangesAsync();
+            return fintechLiteDbContext.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task<Account?> SelectAccountByIdAsync(Guid accountId)
+        public async Task<Account?> SelectAccountByIdAsync(Guid accountId, CancellationToken cancellationToken = default)
         {
            return await fintechLiteDbContext.Accounts
-                .FirstOrDefaultAsync(a => a.Id == accountId);
+                .FirstOrDefaultAsync(a => a.Id == accountId, cancellationToken);
         }
 
-        public async Task<IList<Account>> SelectAllAccountsAsync()
+        public async Task<IList<Account>> SelectAllAccountsAsync(CancellationToken cancellationToken = default)
         {
-            return await fintechLiteDbContext.Accounts.ToListAsync();
+            return await fintechLiteDbContext.Accounts.ToListAsync(cancellationToken);
         }
     }
 }
