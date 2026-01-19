@@ -1,7 +1,7 @@
-﻿using Host.Api.Domain;
+﻿using Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace Host.Api.Data
+namespace Infrastructure
 {
     public class FintechLiteDbContext : DbContext
     {

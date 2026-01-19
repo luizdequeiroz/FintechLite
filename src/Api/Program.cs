@@ -1,4 +1,4 @@
-using Host.Api.Data;
+using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using System.Reflection;

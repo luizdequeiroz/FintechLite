@@ -1,4 +1,4 @@
-using Host.Worker;
+using Workers;
 
 var builder = Microsoft.Extensions.Hosting.Host.CreateApplicationBuilder(args);
 builder.Services.AddHostedService<Worker>();

@@ -1,4 +1,4 @@
-namespace Host.Worker;
+namespace Workers;
 
 public class Worker(ILogger<Worker> logger) : BackgroundService
 {

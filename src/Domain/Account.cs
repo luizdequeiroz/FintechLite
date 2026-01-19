@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Host.Api.Domain
+namespace Domain
 {
     [Table("Accounts")]
     public class Account
