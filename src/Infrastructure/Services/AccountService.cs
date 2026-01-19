@@ -18,6 +18,11 @@ namespace Infrastructure.Services
             return await accountRepository.SelectAllAccountsAsync();
         }
 
+        public async Task<Account?> GetByIdAsync(Guid id)
+        {
+            return await accountRepository.SelectAccountByIdAsync(id);
+        }
+
         public async Task<Account> CreateAsync(string name)
         {
             var account = new Account

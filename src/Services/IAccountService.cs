@@ -6,5 +6,6 @@ namespace Services
     {
         Task<IList<Account>> GetAllAccountsAsync();
         Task<Account> CreateAsync(string name);
+        Task<Account?> GetByIdAsync(Guid id);
     }
 }

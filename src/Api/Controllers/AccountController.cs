@@ -1,4 +1,5 @@
-﻿using Api.DTOs;
+﻿using Api.DTOs.Account;
+using Domain;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 
@@ -16,17 +17,25 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllAccounts()
+        public async Task<ActionResult<IReadOnlyList<AccountResponse>>> List()
         {
-            var accounts = await accountService.GetAllAccountsAsync();
-            return Ok(accounts);
+            var items = await accountService.GetAllAccountsAsync();
+            return Ok(items.Select(a => a.ToResponse()).ToList());
+        }
+
+        [HttpGet("{id:guid}")]
+        public async Task<ActionResult<AccountResponse>> GetById(Guid id)
+        {
+            var account = await accountService.GetByIdAsync(id);
+            if (account is null) return NotFound();
+            return Ok(account.ToResponse());
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAccount([FromBody] AccountDtoRequest accountDto)
+        public async Task<ActionResult<AccountResponse>> Create([FromBody] CreateAccountRequest req)
         {
-            var account = await accountService.CreateAsync(accountDto.Name);
-            return CreatedAtAction(nameof(GetAllAccounts), new { id = account.Id }, account);
+            var created = await accountService.CreateAsync(req.Name);
+            return CreatedAtAction(nameof(GetById), new { id = created.Id }, created.ToResponse());
         }
     }
 }
